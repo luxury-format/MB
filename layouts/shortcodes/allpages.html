@@ -1,0 +1,12 @@
+{{ $pages := where .Site.RegularPages "Type" "page" }}
+{{ $sorted := sort $pages "Permalink" }}
+
+{{ if gt (len $sorted) 0 }}
+<ul class="allpages">
+  {{ range $sorted }}
+    {{ if not (or (eq .Title $.Site.Title) (in .Permalink "404") (in .Permalink "reply-by-email")) }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  {{ end }}
+</ul>
+{{ end }}
