@@ -7,7 +7,7 @@
 {{ if gt (len $sorted) 0 }}
 <ul class="allpages">
   {{ range $sorted }}
-    {{ if ne .Title $.Site.Title }}
+    {{ if and (ne .Title $.Site.Title) (not (in .Permalink "magic/preview/")) }}
       <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
     {{ end }}
   {{ end }}
