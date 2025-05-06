@@ -1,9 +1,8 @@
 {{ $pages := .Site.Pages }}
-
 {{ with site.GetPage "page" "archive" }}
   {{ $pages = union $pages (slice .) }}
 {{ end }}
-
+{{ $pages = where $pages "Title" "ne" "" }}
 {{ $sorted := sort $pages "Permalink" }}
 {{ if gt (len $sorted) 0 }}
 <ul class="allpages">
