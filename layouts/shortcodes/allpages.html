@@ -1,14 +1,16 @@
-{{ $all := .Site.RegularPages }}
-{{ $special := union
-    (where $all ".Kind" "eq" "404")
-    (where $all "Type"  "eq" "redirect")
-    (where $all ".Params.photo" "eq" true)
-    (where $all ".Params.reply" "eq" true)
-}}
-{{ if gt (len $special) 0 }}
-<ul class="special-pages">
-  {{ range $special.ByTitle }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+{{ $pages := .Site.Pages }}
+
+{{ with site.GetPage "page" "archive" }}
+  {{ $pages = union $pages (slice .) }}
+{{ end }}
+
+{{ $sorted := sort $pages "Permalink" }}
+{{ if gt (len $sorted) 0 }}
+<ul class="allpages">
+  {{ range $sorted }}
+    {{ if ne .Title $.Site.Title }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
   {{ end }}
 </ul>
 {{ end }}
