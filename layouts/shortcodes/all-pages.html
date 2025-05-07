@@ -6,7 +6,7 @@
     <div class="debug-section">
       <h3>Basic Site Info</h3>
       <ul class="debug-list">
-        <li><strong>Site Title:</strong> {{ site.Title }}</li>
+        <li><strong>Site Title:</strong> {{ site.Title }} <a href="{{ site.Home.Permalink }}">(home)</a></li>
         <li><strong>Base URL:</strong> {{ site.BaseURL }}</li>
         <li><strong>Language:</strong> {{ site.Language.Lang }}</li>
         <li><strong>IsServer:</strong> {{ site.IsServer }}</li>
@@ -39,7 +39,7 @@
         <h4>Menu: {{ $name }}</h4>
         <ul>
           {{ range $menu }}
-            <li>{{ .Name }} - {{ .URL }} - Weight: {{ .Weight }}</li>
+            <li><a href="{{ .URL }}">{{ .Name }}</a> - Weight: {{ .Weight }}</li>
           {{ end }}
         </ul>
       {{ end }}
@@ -57,10 +57,10 @@
         <li><strong>Section:</strong> {{ $.Page.Section }}</li>
         <li><strong>Layout:</strong> {{ $.Page.Layout }}</li>
         <li><strong>URL:</strong> {{ $.Page.URL }}</li>
-        <li><strong>RelPermalink:</strong> {{ $.Page.RelPermalink }}</li>
+        <li><strong>RelPermalink:</strong> <a href="{{ $.Page.RelPermalink }}">{{ $.Page.RelPermalink }}</a></li>
         <li><strong>Draft:</strong> {{ $.Page.Draft }}</li>
         <li><strong>Date:</strong> {{ $.Page.Date }}</li>
-        <li><strong>Permalink:</strong> {{ $.Page.Permalink }}</li>
+        <li><strong>Permalink:</strong> <a href="{{ $.Page.Permalink }}">{{ $.Page.Permalink }}</a></li>
         <li><strong>WordCount:</strong> {{ $.Page.WordCount }}</li>
         <li><strong>IsHome:</strong> {{ $.Page.IsHome }}</li>
         <li><strong>IsNode:</strong> {{ $.Page.IsNode }}</li>
@@ -94,7 +94,7 @@
       <p>Total: {{ len site.RegularPages }}</p>
       <ul>
         {{ range site.RegularPages }}
-          <li>{{ .Title }} - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
+          <li><a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .RelPermalink }}</li>
         {{ end }}
       </ul>
     </div>
@@ -104,7 +104,7 @@
       <p>Total: {{ len site.Pages }}</p>
       <ul>
         {{ range site.Pages }}
-          <li>[{{ .Kind }}] {{ .Title }} - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
+          <li>[{{ .Kind }}] <a href="{{ .Permalink }}">{{ .Title }}</a> - {{ .RelPermalink }}</li>
         {{ end }}
       </ul>
     </div>
@@ -113,7 +113,7 @@
       <h3>Sections</h3>
       <ul>
         {{ range site.Sections }}
-          <li>{{ .Title }} ({{ len .Pages }} pages) - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
+          <li><a href="{{ .Permalink }}">{{ .Title }}</a> ({{ len .Pages }} pages) - {{ .RelPermalink }}</li>
         {{ end }}
       </ul>
     </div>
@@ -125,11 +125,13 @@
       <h3>All Taxonomies</h3>
       <ul>
         {{ range $taxonomyName, $taxonomy := site.Taxonomies }}
-          <li><strong>{{ $taxonomyName }}:</strong>
+          {{ $taxonomyURL := printf "/%s/" $taxonomyName }}
+          <li><strong><a href="{{ $taxonomyURL | absURL }}">{{ $taxonomyName }}</a>:</strong>
             <ul>
               {{ range $termName, $terms := $taxonomy }}
+                {{ $termURL := printf "/%s/%s/" $taxonomyName $termName }}
                 <li>
-                  <strong>{{ $termName }}</strong> ({{ len $terms }} pages)
+                  <strong><a href="{{ $termURL | absURL }}">{{ $termName }}</a></strong> ({{ len $terms }} pages)
                   <ul>
                     {{ range $terms }}
                       <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
@@ -152,8 +154,9 @@
       <ul>
         {{ with site.Taxonomies.categories }}
           {{ range $category, $pages := . }}
+            {{ $categoryURL := printf "/categories/%s/" $category }}
             <li>
-              <strong>{{ $category }}</strong> ({{ len $pages }} pages)
+              <strong><a href="{{ $categoryURL | absURL }}">{{ $category }}</a></strong> ({{ len $pages }} pages)
               <ul>
                 {{ range $pages }}
                   <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
@@ -172,8 +175,9 @@
       <ul>
         {{ with site.Taxonomies.tags }}
           {{ range $tag, $pages := . }}
+            {{ $tagURL := printf "/tags/%s/" $tag }}
             <li>
-              <strong>{{ $tag }}</strong> ({{ len $pages }} pages)
+              <strong><a href="{{ $tagURL | absURL }}">{{ $tag }}</a></strong> ({{ len $pages }} pages)
               <ul>
                 {{ range $pages }}
                   <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
