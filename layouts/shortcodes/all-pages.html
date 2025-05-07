@@ -1,0 +1,283 @@
+<div class="hugo-debug">
+  <h1>Hugo Debug Information</h1>
+  
+  <section>
+    <h2>Site Variables</h2>
+    <div class="debug-section">
+      <h3>Basic Site Info</h3>
+      <table>
+        <tr><th>Variable</th><th>Value</th></tr>
+        <tr><td>Site Title</td><td>{{ .Site.Title }}</td></tr>
+        <tr><td>Base URL</td><td>{{ .Site.BaseURL }}</td></tr>
+        <tr><td>Language</td><td>{{ .Site.Language.Lang }}</td></tr>
+        <tr><td>Home</td><td>{{ .Site.Home }}</td></tr>
+        <tr><td>IsServer</td><td>{{ .Site.IsServer }}</td></tr>
+        <tr><td>Hugo Version</td><td>{{ .Hugo.Version }}</td></tr>
+        <tr><td>Hugo Environment</td><td>{{ .Hugo.Environment }}</td></tr>
+      </table>
+    </div>
+
+    <div class="debug-section">
+      <h3>Site Parameters</h3>
+      <table>
+        <tr><th>Parameter</th><th>Value</th></tr>
+        {{ range $key, $value := .Site.Params }}
+        <tr>
+          <td>{{ $key }}</td>
+          <td>{{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li></ul>
+            {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}{{ $value }}{{ end }}
+          </td>
+        </tr>
+        {{ end }}
+      </table>
+    </div>
+
+    <div class="debug-section">
+      <h3>Site Menus</h3>
+      {{ range $name, $menu := .Site.Menus }}
+      <h4>Menu: {{ $name }}</h4>
+      <ul>
+        {{ range $menu }}
+        <li>{{ .Name }} - {{ .URL }} - Weight: {{ .Weight }}</li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    </div>
+  </section>
+
+  <section>
+    <h2>Current Page Variables</h2>
+    <div class="debug-section">
+      <h3>Page Basic Info</h3>
+      <table>
+        <tr><th>Variable</th><th>Value</th></tr>
+        <tr><td>Title</td><td>{{ .Title }}</td></tr>
+        <tr><td>Type</td><td>{{ .Type }}</td></tr>
+        <tr><td>Kind</td><td>{{ .Kind }}</td></tr>
+        <tr><td>Section</td><td>{{ .Section }}</td></tr>
+        <tr><td>Layout</td><td>{{ .Layout }}</td></tr>
+        <tr><td>URL</td><td>{{ .URL }}</td></tr>
+        <tr><td>RelPermalink</td><td>{{ .RelPermalink }}</td></tr>
+        <tr><td>Draft</td><td>{{ .Draft }}</td></tr>
+        <tr><td>Date</td><td>{{ .Date }}</td></tr>
+        <tr><td>Permalink</td><td>{{ .Permalink }}</td></tr>
+        <tr><td>WordCount</td><td>{{ .WordCount }}</td></tr>
+        <tr><td>IsHome</td><td>{{ .IsHome }}</td></tr>
+        <tr><td>IsNode</td><td>{{ .IsNode }}</td></tr>
+        <tr><td>IsPage</td><td>{{ .IsPage }}</td></tr>
+      </table>
+    </div>
+
+    <div class="debug-section">
+      <h3>Page Parameters</h3>
+      <table>
+        <tr><th>Parameter</th><th>Value</th></tr>
+        {{ range $key, $value := .Params }}
+        <tr>
+          <td>{{ $key }}</td>
+          <td>{{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+            {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}{{ $value }}{{ end }}
+          </td>
+        </tr>
+        {{ end }}
+      </table>
+    </div>
+
+    <div class="debug-section">
+      <h3>Page Taxonomies</h3>
+      {{ range $taxonomy, $terms := .Site.Taxonomies }}
+      <h4>{{ $taxonomy }}</h4>
+      <ul>
+        {{ range $term, $pages := $terms }}
+        <li>{{ $term }} ({{ len $pages }} pages)</li>
+        {{ end }}
+      </ul>
+      {{ end }}
+    </div>
+  </section>
+
+  <section>
+    <h2>Content Organization</h2>
+    <div class="debug-section">
+      <h3>All Regular Pages</h3>
+      <p>Total: {{ len .Site.RegularPages }}</p>
+      <ul>
+        {{ range first 10 .Site.RegularPages }}
+        <li>{{ .Title }} - {{ .RelPermalink }}</li>
+        {{ end }}
+        {{ if gt (len .Site.RegularPages) 10 }}<li>... plus {{ sub (len .Site.RegularPages) 10 }} more</li>{{ end }}
+      </ul>
+    </div>
+
+    <div class="debug-section">
+      <h3>All Pages (including sections)</h3>
+      <p>Total: {{ len .Site.Pages }}</p>
+      <ul>
+        {{ range first 10 .Site.Pages }}
+        <li>[{{ .Kind }}] {{ .Title }} - {{ .RelPermalink }}</li>
+        {{ end }}
+        {{ if gt (len .Site.Pages) 10 }}<li>... plus {{ sub (len .Site.Pages) 10 }} more</li>{{ end }}
+      </ul>
+    </div>
+
+    <div class="debug-section">
+      <h3>Sections</h3>
+      <ul>
+        {{ range .Site.Sections }}
+        <li>{{ .Title }} ({{ len .Pages }} pages) - {{ .RelPermalink }}</li>
+        {{ end }}
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Micro.blog Specific (if available)</h2>
+    <div class="debug-section">
+      <h3>Micro.blog Data</h3>
+      {{ with .Site.Data.microblog }}
+      <table>
+        <tr><th>Variable</th><th>Value</th></tr>
+        {{ range $key, $value := . }}
+        <tr>
+          <td>{{ $key }}</td>
+          <td>{{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+            {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}{{ $value }}{{ end }}
+          </td>
+        </tr>
+        {{ end }}
+      </table>
+      {{ else }}
+      <p>No .Site.Data.microblog found</p>
+      {{ end }}
+    </div>
+
+    <div class="debug-section">
+      <h3>User Data</h3>
+      {{ with .Site.Data.user }}
+      <table>
+        <tr><th>Variable</th><th>Value</th></tr>
+        {{ range $key, $value := . }}
+        <tr>
+          <td>{{ $key }}</td>
+          <td>{{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+            {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}{{ $value }}{{ end }}
+          </td>
+        </tr>
+        {{ end }}
+      </table>
+      {{ else }}
+      <p>No .Site.Data.user found</p>
+      {{ end }}
+    </div>
+  </section>
+
+  <section>
+    <h2>JSON Dump</h2>
+    <div class="debug-section">
+      <p>The full JSON representation of all site data can be complex. Below is a simplified view.</p>
+      <details>
+        <summary>Site JSON (Click to expand)</summary>
+        <pre>{{ printf "%#v" .Site }}</pre>
+      </details>
+      <details>
+        <summary>Page JSON (Click to expand)</summary>
+        <pre>{{ printf "%#v" . }}</pre>
+      </details>
+    </div>
+  </section>
+</div>
+
+<style>
+  .hugo-debug {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+  
+  .debug-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  h1 {
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 0.5em;
+    color: #2c3e50;
+  }
+  
+  h2 {
+    background: #2c3e50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 30px;
+  }
+  
+  h3 {
+    color: #2c3e50;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  pre {
+    background: #f6f8fa;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  details {
+    margin-top: 10px;
+  }
+  
+  summary {
+    cursor: pointer;
+    padding: 10px;
+    background: #eee;
+    border-radius: 5px;
+  }
+</style>
+{{ end }}
