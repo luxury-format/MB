@@ -7,9 +7,7 @@
 
 {{ if gt (len $sorted) 0 }}
 <ul class="allpages">
-  {{ range $sorted }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ range $sorted }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
     {{ end }}
-  {{ end }}
 </ul>
-{{ end }}
