@@ -1,17 +1,17 @@
-{{ $pages := slice
-   (site.GetPage "page" "archive")
-   (site.GetPage "page" "photos")
-   (site.GetPage "page" "about")
-   (site.GetPage "page" "replies")
-   (site.GetPage "page" "subscribe")
-}}
+{{ $pages := slice }}
+
+{{ with .Site.GetPage "page" "archive" }}   {{ $pages = $pages | append . }} {{ end }}
+{{ with .Site.GetPage "page" "photos" }}    {{ $pages = $pages | append . }} {{ end }}
+{{ with .Site.GetPage "page" "about" }}     {{ $pages = $pages | append . }} {{ end }}
+{{ with .Site.GetPage "page" "replies" }}   {{ $pages = $pages | append . }} {{ end }}
+{{ with .Site.GetPage "page" "subscribe" }} {{ $pages = $pages | append . }} {{ end }}
 
 {{ $pages = where $pages "Title" "ne" "" }}
 
 {{ if gt (len $pages) 0 }}
-<ul class="allpages">
-  {{ range $pages }}
-    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-  {{ end }}
-</ul>
+  <ul class="allpages">
+    {{ range $pages }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
 {{ end }}
