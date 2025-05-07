@@ -5,36 +5,32 @@
     <h2>Site Variables</h2>
     <div class="debug-section">
       <h3>Basic Site Info</h3>
-      <table>
-        <tr><th>Variable</th><th>Value</th></tr>
-        <tr><td>Site Title</td><td>{{ site.Title }}</td></tr>
-        <tr><td>Base URL</td><td>{{ site.BaseURL }}</td></tr>
-        <tr><td>Language</td><td>{{ site.Language.Lang }}</td></tr>
-        <tr><td>IsServer</td><td>{{ site.IsServer }}</td></tr>
-        <tr><td>Hugo Version</td><td>{{ hugo.Version }}</td></tr>
-        <tr><td>Hugo Environment</td><td>{{ hugo.Environment }}</td></tr>
-      </table>
+      <ul class="debug-list">
+        <li><strong>Site Title:</strong> {{ site.Title }}</li>
+        <li><strong>Base URL:</strong> {{ site.BaseURL }}</li>
+        <li><strong>Language:</strong> {{ site.Language.Lang }}</li>
+        <li><strong>IsServer:</strong> {{ site.IsServer }}</li>
+        <li><strong>Hugo Version:</strong> {{ hugo.Version }}</li>
+        <li><strong>Hugo Environment:</strong> {{ hugo.Environment }}</li>
+      </ul>
     </div>
 
     <div class="debug-section">
       <h3>Site Parameters</h3>
-      <table>
-        <tr><th>Parameter</th><th>Value</th></tr>
+      <ul class="debug-list">
         {{ range $key, $value := site.Params }}
-        <tr>
-          <td>{{ $key }}</td>
-          <td>
-            {{ if reflect.IsSlice $value }}
-              <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
-            {{ else if reflect.IsMap $value }}
-              <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}
-              {{ $value }}
-            {{ end }}
-          </td>
-        </tr>
+        <li>
+          <strong>{{ $key }}:</strong>
+          {{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+          {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+          {{ else }}
+            {{ $value }}
+          {{ end }}
+        </li>
         {{ end }}
-      </table>
+      </ul>
     </div>
 
     <div class="debug-section">
@@ -54,44 +50,40 @@
     <h2>Current Page Variables</h2>
     <div class="debug-section">
       <h3>Page Basic Info</h3>
-      <table>
-        <tr><th>Variable</th><th>Value</th></tr>
-        <tr><td>Title</td><td>{{ $.Page.Title }}</td></tr>
-        <tr><td>Type</td><td>{{ $.Page.Type }}</td></tr>
-        <tr><td>Kind</td><td>{{ $.Page.Kind }}</td></tr>
-        <tr><td>Section</td><td>{{ $.Page.Section }}</td></tr>
-        <tr><td>Layout</td><td>{{ $.Page.Layout }}</td></tr>
-        <tr><td>URL</td><td>{{ $.Page.URL }}</td></tr>
-        <tr><td>RelPermalink</td><td>{{ $.Page.RelPermalink }}</td></tr>
-        <tr><td>Draft</td><td>{{ $.Page.Draft }}</td></tr>
-        <tr><td>Date</td><td>{{ $.Page.Date }}</td></tr>
-        <tr><td>Permalink</td><td>{{ $.Page.Permalink }}</td></tr>
-        <tr><td>WordCount</td><td>{{ $.Page.WordCount }}</td></tr>
-        <tr><td>IsHome</td><td>{{ $.Page.IsHome }}</td></tr>
-        <tr><td>IsNode</td><td>{{ $.Page.IsNode }}</td></tr>
-        <tr><td>IsPage</td><td>{{ $.Page.IsPage }}</td></tr>
-      </table>
+      <ul class="debug-list">
+        <li><strong>Title:</strong> {{ $.Page.Title }}</li>
+        <li><strong>Type:</strong> {{ $.Page.Type }}</li>
+        <li><strong>Kind:</strong> {{ $.Page.Kind }}</li>
+        <li><strong>Section:</strong> {{ $.Page.Section }}</li>
+        <li><strong>Layout:</strong> {{ $.Page.Layout }}</li>
+        <li><strong>URL:</strong> {{ $.Page.URL }}</li>
+        <li><strong>RelPermalink:</strong> {{ $.Page.RelPermalink }}</li>
+        <li><strong>Draft:</strong> {{ $.Page.Draft }}</li>
+        <li><strong>Date:</strong> {{ $.Page.Date }}</li>
+        <li><strong>Permalink:</strong> {{ $.Page.Permalink }}</li>
+        <li><strong>WordCount:</strong> {{ $.Page.WordCount }}</li>
+        <li><strong>IsHome:</strong> {{ $.Page.IsHome }}</li>
+        <li><strong>IsNode:</strong> {{ $.Page.IsNode }}</li>
+        <li><strong>IsPage:</strong> {{ $.Page.IsPage }}</li>
+      </ul>
     </div>
 
     <div class="debug-section">
       <h3>Page Parameters</h3>
-      <table>
-        <tr><th>Parameter</th><th>Value</th></tr>
+      <ul class="debug-list">
         {{ range $key, $value := $.Page.Params }}
-        <tr>
-          <td>{{ $key }}</td>
-          <td>
-            {{ if reflect.IsSlice $value }}
-              <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
-            {{ else if reflect.IsMap $value }}
-              <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}
-              {{ $value }}
-            {{ end }}
-          </td>
-        </tr>
+        <li>
+          <strong>{{ $key }}:</strong>
+          {{ if reflect.IsSlice $value }}
+            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+          {{ else if reflect.IsMap $value }}
+            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+          {{ else }}
+            {{ $value }}
+          {{ end }}
+        </li>
         {{ end }}
-      </table>
+      </ul>
     </div>
   </section>
 
@@ -130,15 +122,69 @@
   <section>
     <h2>Taxonomies</h2>
     <div class="debug-section">
-      {{ range $taxonomy, $terms := site.Taxonomies }}
-        <h3>{{ $taxonomy }}</h3>
-        <ul>
-          {{ range $term, $pages := $terms }}
-            <li>{{ $term }} ({{ len $pages }} pages)</li>
+      <h3>All Taxonomies</h3>
+      <ul>
+        {{ range $taxonomyName, $taxonomy := site.Taxonomies }}
+          <li><strong>{{ $taxonomyName }}:</strong>
+            <ul>
+              {{ range $termName, $terms := $taxonomy }}
+                <li>
+                  <strong>{{ $termName }}</strong> ({{ len $terms }} pages)
+                  <ul>
+                    {{ range $terms }}
+                      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                    {{ end }}
+                  </ul>
+                </li>
+              {{ else }}
+                <li><em>No {{ $taxonomyName }} found</em></li>
+              {{ end }}
+            </ul>
+          </li>
+        {{ else }}
+          <li><em>No taxonomies configured</em></li>
+        {{ end }}
+      </ul>
+    </div>
+    
+    <div class="debug-section">
+      <h3>Categories Detail</h3>
+      <ul>
+        {{ with site.Taxonomies.categories }}
+          {{ range $category, $pages := . }}
+            <li>
+              <strong>{{ $category }}</strong> ({{ len $pages }} pages)
+              <ul>
+                {{ range $pages }}
+                  <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                {{ end }}
+              </ul>
+            </li>
           {{ end }}
-        </ul>
-      {{ end }}
+        {{ else }}
+          <li><em>No categories found</em></li>
+        {{ end }}
+      </ul>
+    </div>
+    
+    <div class="debug-section">
+      <h3>Tags Detail</h3>
+      <ul>
+        {{ with site.Taxonomies.tags }}
+          {{ range $tag, $pages := . }}
+            <li>
+              <strong>{{ $tag }}</strong> ({{ len $pages }} pages)
+              <ul>
+                {{ range $pages }}
+                  <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                {{ end }}
+              </ul>
+            </li>
+          {{ end }}
+        {{ else }}
+          <li><em>No tags found</em></li>
+        {{ end }}
+      </ul>
     </div>
   </section>
-
 </div>
