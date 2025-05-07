@@ -1,15 +1,19 @@
-{{ $pages := .Site.Pages }}
-{{ with site.GetPage "page" "archive" }}
-  {{ $pages = union $pages (slice .) }}
-{{ end }}
+{{ $pages := .Site.RegularPages }}
+
 {{ $pages = where $pages "Title" "ne" "" }}
+
+{{ $pages = where $pages "Section" "ne" "posts" }}
+
 {{ $sorted := sort $pages "Permalink" }}
+
 {{ if gt (len $sorted) 0 }}
 <ul class="allpages">
   {{ range $sorted }}
-    {{ if and (ne .Title $.Site.Title) (not (in .Permalink "magic/preview/")) }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-    {{ end }}
+    <li>
+      <a href="{{ .RelPermalink }}">
+        {{ .Title }}
+      </a>
+    </li>
   {{ end }}
 </ul>
 {{ end }}
