@@ -101,11 +101,8 @@
       <h3>All Regular Pages</h3>
       <p>Total: {{ len site.RegularPages }}</p>
       <ul>
-        {{ range first 10 site.RegularPages }}
-          <li>{{ .Title }} - {{ .RelPermalink }}</li>
-        {{ end }}
-        {{ if gt (len site.RegularPages) 10 }}
-          <li>... plus {{ sub (len site.RegularPages) 10 }} more</li>
+        {{ range site.RegularPages }}
+          <li>{{ .Title }} - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
         {{ end }}
       </ul>
     </div>
@@ -114,11 +111,8 @@
       <h3>All Pages (including sections)</h3>
       <p>Total: {{ len site.Pages }}</p>
       <ul>
-        {{ range first 10 site.Pages }}
-          <li>[{{ .Kind }}] {{ .Title }} - {{ .RelPermalink }}</li>
-        {{ end }}
-        {{ if gt (len site.Pages) 10 }}
-          <li>... plus {{ sub (len site.Pages) 10 }} more</li>
+        {{ range site.Pages }}
+          <li>[{{ .Kind }}] {{ .Title }} - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
         {{ end }}
       </ul>
     </div>
@@ -127,7 +121,7 @@
       <h3>Sections</h3>
       <ul>
         {{ range site.Sections }}
-          <li>{{ .Title }} ({{ len .Pages }} pages) - {{ .RelPermalink }}</li>
+          <li>{{ .Title }} ({{ len .Pages }} pages) - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
         {{ end }}
       </ul>
     </div>
