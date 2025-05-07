@@ -1,4 +1,4 @@
-
+<div class="hugo-debug">
   <h1>Hugo Debug Information</h1>
   
   <section>
@@ -7,13 +7,12 @@
       <h3>Basic Site Info</h3>
       <table>
         <tr><th>Variable</th><th>Value</th></tr>
-        <tr><td>Site Title</td><td>{{ .Site.Title }}</td></tr>
-        <tr><td>Base URL</td><td>{{ .Site.BaseURL }}</td></tr>
-        <tr><td>Language</td><td>{{ .Site.Language.Lang }}</td></tr>
-        <tr><td>Home</td><td>{{ .Site.Home }}</td></tr>
-        <tr><td>IsServer</td><td>{{ .Site.IsServer }}</td></tr>
-        <tr><td>Hugo Version</td><td>{{ .Hugo.Version }}</td></tr>
-        <tr><td>Hugo Environment</td><td>{{ .Hugo.Environment }}</td></tr>
+        <tr><td>Site Title</td><td>{{ site.Title }}</td></tr>
+        <tr><td>Base URL</td><td>{{ site.BaseURL }}</td></tr>
+        <tr><td>Language</td><td>{{ site.Language.Lang }}</td></tr>
+        <tr><td>IsServer</td><td>{{ site.IsServer }}</td></tr>
+        <tr><td>Hugo Version</td><td>{{ hugo.Version }}</td></tr>
+        <tr><td>Hugo Environment</td><td>{{ hugo.Environment }}</td></tr>
       </table>
     </div>
 
@@ -21,14 +20,17 @@
       <h3>Site Parameters</h3>
       <table>
         <tr><th>Parameter</th><th>Value</th></tr>
-        {{ range $key, $value := .Site.Params }}
+        {{ range $key, $value := site.Params }}
         <tr>
           <td>{{ $key }}</td>
-          <td>{{ if reflect.IsSlice $value }}
-            <ul>{{ range $value }}<li>{{ . }}</li></ul>
+          <td>
+            {{ if reflect.IsSlice $value }}
+              <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
             {{ else if reflect.IsMap $value }}
-            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}{{ $value }}{{ end }}
+              <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}
+              {{ $value }}
+            {{ end }}
           </td>
         </tr>
         {{ end }}
@@ -37,13 +39,13 @@
 
     <div class="debug-section">
       <h3>Site Menus</h3>
-      {{ range $name, $menu := .Site.Menus }}
-      <h4>Menu: {{ $name }}</h4>
-      <ul>
-        {{ range $menu }}
-        <li>{{ .Name }} - {{ .URL }} - Weight: {{ .Weight }}</li>
-        {{ end }}
-      </ul>
+      {{ range $name, $menu := site.Menus }}
+        <h4>Menu: {{ $name }}</h4>
+        <ul>
+          {{ range $menu }}
+            <li>{{ .Name }} - {{ .URL }} - Weight: {{ .Weight }}</li>
+          {{ end }}
+        </ul>
       {{ end }}
     </div>
   </section>
@@ -54,20 +56,20 @@
       <h3>Page Basic Info</h3>
       <table>
         <tr><th>Variable</th><th>Value</th></tr>
-        <tr><td>Title</td><td>{{ .Title }}</td></tr>
-        <tr><td>Type</td><td>{{ .Type }}</td></tr>
-        <tr><td>Kind</td><td>{{ .Kind }}</td></tr>
-        <tr><td>Section</td><td>{{ .Section }}</td></tr>
-        <tr><td>Layout</td><td>{{ .Layout }}</td></tr>
-        <tr><td>URL</td><td>{{ .URL }}</td></tr>
-        <tr><td>RelPermalink</td><td>{{ .RelPermalink }}</td></tr>
-        <tr><td>Draft</td><td>{{ .Draft }}</td></tr>
-        <tr><td>Date</td><td>{{ .Date }}</td></tr>
-        <tr><td>Permalink</td><td>{{ .Permalink }}</td></tr>
-        <tr><td>WordCount</td><td>{{ .WordCount }}</td></tr>
-        <tr><td>IsHome</td><td>{{ .IsHome }}</td></tr>
-        <tr><td>IsNode</td><td>{{ .IsNode }}</td></tr>
-        <tr><td>IsPage</td><td>{{ .IsPage }}</td></tr>
+        <tr><td>Title</td><td>{{ $.Page.Title }}</td></tr>
+        <tr><td>Type</td><td>{{ $.Page.Type }}</td></tr>
+        <tr><td>Kind</td><td>{{ $.Page.Kind }}</td></tr>
+        <tr><td>Section</td><td>{{ $.Page.Section }}</td></tr>
+        <tr><td>Layout</td><td>{{ $.Page.Layout }}</td></tr>
+        <tr><td>URL</td><td>{{ $.Page.URL }}</td></tr>
+        <tr><td>RelPermalink</td><td>{{ $.Page.RelPermalink }}</td></tr>
+        <tr><td>Draft</td><td>{{ $.Page.Draft }}</td></tr>
+        <tr><td>Date</td><td>{{ $.Page.Date }}</td></tr>
+        <tr><td>Permalink</td><td>{{ $.Page.Permalink }}</td></tr>
+        <tr><td>WordCount</td><td>{{ $.Page.WordCount }}</td></tr>
+        <tr><td>IsHome</td><td>{{ $.Page.IsHome }}</td></tr>
+        <tr><td>IsNode</td><td>{{ $.Page.IsNode }}</td></tr>
+        <tr><td>IsPage</td><td>{{ $.Page.IsPage }}</td></tr>
       </table>
     </div>
 
@@ -75,30 +77,21 @@
       <h3>Page Parameters</h3>
       <table>
         <tr><th>Parameter</th><th>Value</th></tr>
-        {{ range $key, $value := .Params }}
+        {{ range $key, $value := $.Page.Params }}
         <tr>
           <td>{{ $key }}</td>
-          <td>{{ if reflect.IsSlice $value }}
-            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+          <td>
+            {{ if reflect.IsSlice $value }}
+              <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
             {{ else if reflect.IsMap $value }}
-            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}{{ $value }}{{ end }}
+              <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+            {{ else }}
+              {{ $value }}
+            {{ end }}
           </td>
         </tr>
         {{ end }}
       </table>
-    </div>
-
-    <div class="debug-section">
-      <h3>Page Taxonomies</h3>
-      {{ range $taxonomy, $terms := .Site.Taxonomies }}
-      <h4>{{ $taxonomy }}</h4>
-      <ul>
-        {{ range $term, $pages := $terms }}
-        <li>{{ $term }} ({{ len $pages }} pages)</li>
-        {{ end }}
-      </ul>
-      {{ end }}
     </div>
   </section>
 
@@ -106,33 +99,51 @@
     <h2>Content Organization</h2>
     <div class="debug-section">
       <h3>All Regular Pages</h3>
-      <p>Total: {{ len .Site.RegularPages }}</p>
+      <p>Total: {{ len site.RegularPages }}</p>
       <ul>
-        {{ range first 10 .Site.RegularPages }}
-        <li>{{ .Title }} - {{ .RelPermalink }}</li>
+        {{ range first 10 site.RegularPages }}
+          <li>{{ .Title }} - {{ .RelPermalink }}</li>
         {{ end }}
-        {{ if gt (len .Site.RegularPages) 10 }}<li>... plus {{ sub (len .Site.RegularPages) 10 }} more</li>{{ end }}
+        {{ if gt (len site.RegularPages) 10 }}
+          <li>... plus {{ sub (len site.RegularPages) 10 }} more</li>
+        {{ end }}
       </ul>
     </div>
 
     <div class="debug-section">
       <h3>All Pages (including sections)</h3>
-      <p>Total: {{ len .Site.Pages }}</p>
+      <p>Total: {{ len site.Pages }}</p>
       <ul>
-        {{ range first 10 .Site.Pages }}
-        <li>[{{ .Kind }}] {{ .Title }} - {{ .RelPermalink }}</li>
+        {{ range first 10 site.Pages }}
+          <li>[{{ .Kind }}] {{ .Title }} - {{ .RelPermalink }}</li>
         {{ end }}
-        {{ if gt (len .Site.Pages) 10 }}<li>... plus {{ sub (len .Site.Pages) 10 }} more</li>{{ end }}
+        {{ if gt (len site.Pages) 10 }}
+          <li>... plus {{ sub (len site.Pages) 10 }} more</li>
+        {{ end }}
       </ul>
     </div>
 
     <div class="debug-section">
       <h3>Sections</h3>
       <ul>
-        {{ range .Site.Sections }}
-        <li>{{ .Title }} ({{ len .Pages }} pages) - {{ .RelPermalink }}</li>
+        {{ range site.Sections }}
+          <li>{{ .Title }} ({{ len .Pages }} pages) - {{ .RelPermalink }}</li>
         {{ end }}
       </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Taxonomies</h2>
+    <div class="debug-section">
+      {{ range $taxonomy, $terms := site.Taxonomies }}
+        <h3>{{ $taxonomy }}</h3>
+        <ul>
+          {{ range $term, $pages := $terms }}
+            <li>{{ $term }} ({{ len $pages }} pages)</li>
+          {{ end }}
+        </ul>
+      {{ end }}
     </div>
   </section>
 
@@ -140,61 +151,63 @@
     <h2>Micro.blog Specific (if available)</h2>
     <div class="debug-section">
       <h3>Micro.blog Data</h3>
-      {{ with .Site.Data.microblog }}
-      <table>
-        <tr><th>Variable</th><th>Value</th></tr>
-        {{ range $key, $value := . }}
-        <tr>
-          <td>{{ $key }}</td>
-          <td>{{ if reflect.IsSlice $value }}
-            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
-            {{ else if reflect.IsMap $value }}
-            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}{{ $value }}{{ end }}
-          </td>
-        </tr>
-        {{ end }}
-      </table>
+      {{ with site.Data.microblog }}
+        <table>
+          <tr><th>Variable</th><th>Value</th></tr>
+          {{ range $key, $value := . }}
+          <tr>
+            <td>{{ $key }}</td>
+            <td>
+              {{ if reflect.IsSlice $value }}
+                <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+              {{ else if reflect.IsMap $value }}
+                <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+              {{ else }}
+                {{ $value }}
+              {{ end }}
+            </td>
+          </tr>
+          {{ end }}
+        </table>
       {{ else }}
-      <p>No .Site.Data.microblog found</p>
+        <p>No site.Data.microblog found</p>
       {{ end }}
     </div>
 
     <div class="debug-section">
       <h3>User Data</h3>
-      {{ with .Site.Data.user }}
-      <table>
-        <tr><th>Variable</th><th>Value</th></tr>
-        {{ range $key, $value := . }}
-        <tr>
-          <td>{{ $key }}</td>
-          <td>{{ if reflect.IsSlice $value }}
-            <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
-            {{ else if reflect.IsMap $value }}
-            <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
-            {{ else }}{{ $value }}{{ end }}
-          </td>
-        </tr>
-        {{ end }}
-      </table>
+      {{ with site.Data.user }}
+        <table>
+          <tr><th>Variable</th><th>Value</th></tr>
+          {{ range $key, $value := . }}
+          <tr>
+            <td>{{ $key }}</td>
+            <td>
+              {{ if reflect.IsSlice $value }}
+                <ul>{{ range $value }}<li>{{ . }}</li>{{ end }}</ul>
+              {{ else if reflect.IsMap $value }}
+                <ul>{{ range $k, $v := $value }}<li>{{ $k }}: {{ $v }}</li>{{ end }}</ul>
+              {{ else }}
+                {{ $value }}
+              {{ end }}
+            </td>
+          </tr>
+          {{ end }}
+        </table>
       {{ else }}
-      <p>No .Site.Data.user found</p>
+        <p>No site.Data.user found</p>
       {{ end }}
     </div>
   </section>
 
   <section>
-    <h2>JSON Dump</h2>
+    <h2>Simple Debug</h2>
     <div class="debug-section">
-      <p>The full JSON representation of all site data can be complex. Below is a simplified view.</p>
-      <details>
-        <summary>Site JSON (Click to expand)</summary>
-        <pre>{{ printf "%#v" .Site }}</pre>
-      </details>
-      <details>
-        <summary>Page JSON (Click to expand)</summary>
-        <pre>{{ printf "%#v" . }}</pre>
-      </details>
+      <h3>Page Context</h3>
+      <pre>{{ printf "%#v" $ }}</pre>
+      
+      <h3>Site Context</h3>
+      <pre>{{ printf "%#v" site }}</pre>
     </div>
   </section>
 </div>
@@ -268,16 +281,4 @@
   ul {
     padding-left: 20px;
   }
-  
-  details {
-    margin-top: 10px;
-  }
-  
-  summary {
-    cursor: pointer;
-    padding: 10px;
-    background: #eee;
-    border-radius: 5px;
-  }
 </style>
-{{ end }}
