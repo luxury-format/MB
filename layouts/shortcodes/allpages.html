@@ -11,18 +11,29 @@
 <ul class="allpages">
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
-      {{ $targetPath := .Params.redirect }}
-      {{ $target := site.GetPage $targetPath }}
-      <li>
-        <a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> – redirect to:
-        {{ if $target }}
-          <strong>{{ upper $target.Title }}</strong> - <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
-        {{ else }}
-          <a href="{{ $targetPath }}">{{ $targetPath }}</a>
-        {{ end }}
-      </li>
+      {{ with .Params.redirect }}
+        {{ $raw := . }}
+        {{ $clean := strings.TrimPrefix "/" $raw }}
+        {{ $clean = printf "/%s" $clean }}
+        {{ $clean = replaceRE "\\.(html|md)$" "" $clean }}
+        {{ $target := .Site.GetPage $clean }}
+        <li>
+          <strong><a href="{{ $.Permalink }}">{{ if $.Title }}{{ upper $.Title }}{{ else }}Untitled{{ end }}</a></strong> – redirect to:
+          {{ if $target }}
+            <strong>{{ if $target.Title }}{{ upper $target.Title }}{{ else }}Untitled{{ end }}</strong> – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
+          {{ else }}
+            <a href="{{ $raw }}">{{ $raw }}</a>
+            <span class="warning">(Warning: Target page not found)</span>
+          {{ end }}
+        </li>
+      {{ else }}
+        <li>
+          <strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}Untitled{{ end }}</a></strong>
+          <span class="warning">(Warning: Redirect page missing target URL)</span>
+        </li>
+      {{ end }}
     {{ else }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a></li>
+      <li><strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}Untitled{{ end }}</a></strong></li>
     {{ end }}
   {{ end }}
 </ul>
