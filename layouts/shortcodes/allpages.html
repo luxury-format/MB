@@ -1,33 +1,35 @@
-{{ $site := .Site }}
-{{ $pages := $site.Pages
-  | where "Title" "ne" ""
-  | where "Kind"  "page"
-  | where "Type" "in"    (slice "page" "archive" "redirect" "photos")
-  | where "Type" "not in" (slice "2025" "categories" "post")
-  | where "Kind" "not in" (slice "section" "taxonomy" "home" "term")
-  | where "Layout" "ne" "post"
-  | where "Section" "not in" (slice "2025" "categories")
-  | sort "Permalink"
-}}
+{{ $pages := .Site.RegularPages }}
+{{ $pages = where $pages "Title" "ne" "" }}
+{{ $pages = where $pages "Kind" "page" }}
+{{ $pages = where $pages "Type" "in" (slice "page" "archive" "redirect" "photos") }}
+{{ $pages = where $pages "Type" "not in" (slice "2025" "categories" "post") }}
+{{ $pages = where $pages "Kind" "not in" (slice "section" "taxonomy" "home" "term") }}
+{{ $pages = where $pages "Layout" "ne" "post" }}
+{{ $pages = where $pages "Section" "not in" (slice "2025" "categories") }}
+{{ $pages = sort $pages "Permalink" }}
 
 <ul class="allpages">
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
       {{ with .Params.redirect }}
         {{ $raw := . }}
-        {{/* strip leading slash */}}
-        {{ $clean := replaceRE "^/" "" $raw }}
-        {{/* strip .html or .md extensions */}}
+        {{/* strip leading slash and any .html/.md */}}
+        {{ $clean := replaceRE "^/?" "" $raw }}
         {{ $clean = replaceRE "\\.(html|md)$" "" $clean }}
-        {{/* ensure leading slash for lookup */}}
         {{ $clean = printf "/%s" $clean }}
-        {{ $target := $site.GetPage $clean }}
+        {{ $target := $.Site.GetPage $clean }}
 
         <li>
-          <strong><a href="{{ $.Permalink }}">{{ if $.Title }}{{ upper $.Title }}{{ else }}UNTITLED{{ end }}</a></strong>
+          <strong>
+            <a href="{{ $.Permalink }}">
+              {{ if $.Title }}{{ upper $.Title }}{{ else }}UNTITLED{{ end }}
+            </a>
+          </strong>
            – redirect to:
           {{ if $target }}
-            <strong>{{ if $target.Title }}{{ upper $target.Title }}{{ else }}UNTITLED{{ end }}</strong>
+            <strong>
+              {{ if $target.Title }}{{ upper $target.Title }}{{ else }}UNTITLED{{ end }}
+            </strong>
             – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
           {{ else }}
             <a href="{{ $raw }}">{{ $raw }}</a>
@@ -37,13 +39,21 @@
 
       {{ else }}
         <li>
-          <strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}</a></strong>
+          <strong>
+            <a href="{{ .Permalink }}">
+              {{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}
+            </a>
+          </strong>
           <span class="warning" role="alert">Warning: No redirect URL</span>
         </li>
       {{ end }}
     {{ else }}
       <li>
-        <strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}</a></strong>
+        <strong>
+          <a href="{{ .Permalink }}">
+            {{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}
+          </a>
+        </strong>
       </li>
     {{ end }}
   {{ end }}
