@@ -1,15 +1,20 @@
 {{ $pages := .Site.Pages }}
-{{ with site.GetPage "page" "archive" }}
-  {{ $pages = union $pages (slice .) }}
-{{ end }}
 {{ $pages = where $pages "Title" "ne" "" }}
-{{ $sorted := sort $pages "Permalink" }}
-{{ if gt (len $sorted) 0 }}
+{{ $pages = where $pages "Kind" "page" }}
+{{ $pages = where $pages "Type" "in" (slice "page" "archive" "redirect" "photos") }}
+{{ $pages = where $pages "Layout" "in" (slice "list.archivehtml" "list.photoshtml") }}
+{{ $pages = where $pages "Type" "not in" (slice "2025" "categories" "post") }}
+{{ $pages = where $pages "Kind" "not in" (slice "section" "taxonomy" "home" "term") }}
+{{ $pages = where $pages "Layout" "ne" "post" }}
+{{ $pages = where $pages "Section" "not in" (slice "2025" "categories") }}
+{{ $pages = sort $pages "Permalink" }}
+
 <ul class="allpages">
-  {{ range $sorted }}
-    {{ if and (ne .Title $.Site.Title) (not (in .Permalink "magic/preview/")) }}
-      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+  {{ range $pages }}
+    {{ if eq .Type "redirect" }}
+      <li>redirect <a href="{{ .Permalink }}">{{ .Permalink }}</a></li>
+    {{ else }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
     {{ end }}
   {{ end }}
 </ul>
-{{ end }}
