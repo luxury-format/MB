@@ -2,7 +2,7 @@
 {{ $pages = where $pages "Title" "ne" "" }}
 {{ $pages = where $pages "Kind"  "page" }}
 {{ $pages = where $pages "Type"  "in"    (slice "page" "archive" "redirect" "photos") }}
-{{ $pages = where $pages "Layout" "in"   (slice "list.archivehtml" "list.photoshtml" "page") }}
+{{ $pages = where $pages "Layout" "in" (slice "list.archivehtml" "list.photoshtml" "page") }}
 {{ $pages = where $pages "Type"  "not in" (slice "2025" "categories" "post") }}
 {{ $pages = where $pages "Kind"  "not in" (slice "section" "taxonomy" "home" "term") }}
 {{ $pages = where $pages "Layout" "ne"    "post" }}
