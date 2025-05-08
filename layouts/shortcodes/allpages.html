@@ -1,8 +1,8 @@
-{{ $site  := .Site }}
-{{ $pages := $site.RegularPages }}
+{{ $pages := .Site.RegularPages }}
 {{ $pages = where $pages "Title" "ne" "" }}
 {{ $pages = where $pages "Kind"  "page" }}
 {{ $pages = where $pages "Type"  "in"    (slice "page" "archive" "redirect" "photos") }}
+{{ $pages = where $pages "Layout" "in"   (slice "list.archivehtml" "list.photoshtml" "page") }}
 {{ $pages = where $pages "Type"  "not in" (slice "2025" "categories" "post") }}
 {{ $pages = where $pages "Kind"  "not in" (slice "section" "taxonomy" "home" "term") }}
 {{ $pages = where $pages "Layout" "ne"    "post" }}
@@ -10,29 +10,14 @@
 {{ $pages = sort $pages "Permalink" }}
 
 <ul class="allpages">
-  {{ range .Site.RegularPages }}
-    {{ $ := . }}
-    {{ if eq $.Type "redirect" }}
-      {{ with $.Params.redirect }}
-        {{ $raw := . }}
-        {{ $parsed := urls.Parse $raw }}
-
-        <li>
-          <strong>
-            <a href="{{ $.Permalink }}">{{ upper $.Title }}</a>
-          </strong>
-           → 
-          <a href="{{ $raw }}">{{ $parsed.Hostname }}</a>
-        </li>
-      {{ else }}
-        <li>
-          <strong><a href="{{ $.Permalink }}">{{ upper $.Title }}</a></strong>
-        </li>
-      {{ end }}
-    {{ else }}
+  {{ range $pages }}
+    {{ if eq .Type "redirect" }}
       <li>
-        <strong><a href="{{ $.Permalink }}">{{ upper $.Title }}</a></strong>
+        <a href="{{ .Permalink }}">{{ upper .Title }}</a>: redirect to → 
+        <a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>
       </li>
+    {{ else }}
+      <li><a href="{{ .Permalink }}">{{ upper .Title }}</a></li>
     {{ end }}
   {{ end }}
 </ul>
