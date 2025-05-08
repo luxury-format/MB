@@ -11,7 +11,7 @@
 <ul class="allpages">
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a>: redirect to → <a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>
       </li>
     {{ else }}
       <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
