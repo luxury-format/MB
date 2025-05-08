@@ -14,12 +14,17 @@
     {{ $cleanRelPermalink = strings.TrimSuffix "/" $cleanRelPermalink }}
     
     {{ if eq .Type "redirect" }}
-      {{ $cleanRedirect := .Params.redirect }}
-      {{ $cleanRedirect = replaceRE "^(https?://)" "" $cleanRedirect }}
-      {{ $cleanRedirect = replaceRE "^www\\." "" $cleanRedirect }}
-      {{ $cleanRedirect = strings.TrimSuffix ".html" $cleanRedirect }}
-      {{ $cleanRedirect = strings.TrimSuffix "/" $cleanRedirect }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ $cleanRedirect }}</a>
+      {{ $cleanRedirectOne := .Params.redirect }}
+      {{ $cleanRedirectOne = replaceRE "{{ .Site.BaseURL }}" "" $cleanRedirectOne }}
+      {{ $cleanRedirectOne = strings.TrimSuffix ".html" $cleanRedirectOne }}
+      {{ $cleanRedirectOne = strings.TrimSuffix "/" $cleanRedirectOne }}
+      
+      {{ $cleanRedirectTwo := .Params.redirect }}
+      {{ $cleanRedirectTwo = replaceRE "^(https?://)" "" $cleanRedirectTwo }}
+      {{ $cleanRedirectTwo = replaceRE "^www\\." "" $cleanRedirectTwo }}
+      {{ $cleanRedirectTwo = strings.TrimSuffix ".html" $cleanRedirectTwo }}
+      {{ $cleanRedirectTwo = strings.TrimSuffix "/" $cleanRedirectTwo }}
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ if $cleanRedirectOne }}{{ $cleanRedirectOne }}{{ else }}{{ $sleanRedirectTwo }}{{ end }}</a>
       </li>
     {{ else }}
       <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a></li>
