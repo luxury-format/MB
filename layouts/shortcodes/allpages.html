@@ -29,6 +29,9 @@
             <strong>
               {{ if $target.Title }}{{ upper $target.Title }}{{ else }}UNTITLED{{ end }}
             </strong> – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
+          {{ else }}
+            <a href="{{ $raw }}">{{ $raw }}</a>
+            <span class="warning" role="alert">Warning: Target not found</span>
           {{ end }}
         </li>
       {{ else }}
@@ -38,6 +41,7 @@
               {{ if $p.Title }}{{ upper $p.Title }}{{ else }}UNTITLED{{ end }}
             </a>
           </strong>
+          <span class="warning" role="alert">Warning: No redirect URL</span>
         </li>
       {{ end }}
     {{ else }}
