@@ -11,7 +11,16 @@
 <ul class="allpages">
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
-      <li>redirect <a href="{{ .Permalink }}">{{ .Permalink }}</a></li>
+      {{ $targetPath := .Params.redirect }}
+      {{ $target := site.GetPage $targetPath }}
+      <li>
+        <strong>{{ .Title }}</strong> – redirect to:
+        {{ if $target }}
+          <a href="{{ $target.Permalink }}">{{ $target.Title }}</a>
+        {{ else }}
+          <a href="{{ $targetPath }}">{{ $targetPath }}</a>
+        {{ end }}
+      </li>
     {{ else }}
       <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
     {{ end }}
