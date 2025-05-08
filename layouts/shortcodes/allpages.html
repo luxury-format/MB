@@ -27,10 +27,6 @@
           </strong>
            → 
           {{ if $target }}
-            <strong>
-              <a href="{{ $target.Permalink }}">{{ upper $target.Title }}</a>
-            </strong>
-          {{ else }}
             <a href="{{ $raw }}">{{ $raw }}</a>
           {{ end }}
         </li>
