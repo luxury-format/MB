@@ -10,11 +10,16 @@
 
 <ul class="allpages">
   {{ range $pages }}
+    {{ $cleanRelPermalink := strings.TrimSuffix ".html" .RelPermalink }}
+    {{ $cleanRelPermalink = strings.TrimSuffix "/" $cleanRelPermalink }}
+    
     {{ if eq .Type "redirect" }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>
+      {{ $cleanRedirect := strings.TrimSuffix ".html" .Params.redirect }}
+      {{ $cleanRedirect = strings.TrimSuffix "/" $cleanRedirect }}
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ $cleanRedirect }}</a>
       </li>
     {{ else }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ .RelPermalink }}</a></li>
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a></li>
     {{ end }}
   {{ end }}
 </ul>
