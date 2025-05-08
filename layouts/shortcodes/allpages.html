@@ -10,38 +10,35 @@
 
 <ul class="allpages">
   {{ range $pages }}
-    {{ if eq .Type "redirect" }}
-      {{ with .Params.redirect }}
+    {{ $p := . }}
+    {{ if eq $p.Type "redirect" }}
+      {{ with $p.Params.redirect }}
         {{ $raw := . }}
-        {{/* strip leading slash and any .html/.md */}}
         {{ $clean := replaceRE "^/?" "" $raw }}
         {{ $clean = replaceRE "\\.(html|md)$" "" $clean }}
         {{ $clean = printf "/%s" $clean }}
-        {{ $target := $.Site.GetPage $clean }}
+        {{ $target := $p.Site.GetPage $clean }}
 
         <li>
           <strong>
-            <a href="{{ $.Permalink }}">
-              {{ if $.Title }}{{ upper $.Title }}{{ else }}UNTITLED{{ end }}
+            <a href="{{ $p.Permalink }}">
+              {{ if $p.Title }}{{ upper $p.Title }}{{ else }}UNTITLED{{ end }}
             </a>
-          </strong>
-           – redirect to:
+          </strong> – redirect to:
           {{ if $target }}
             <strong>
               {{ if $target.Title }}{{ upper $target.Title }}{{ else }}UNTITLED{{ end }}
-            </strong>
-            – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
+            </strong> – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
           {{ else }}
             <a href="{{ $raw }}">{{ $raw }}</a>
             <span class="warning" role="alert">Warning: Target not found</span>
           {{ end }}
         </li>
-
       {{ else }}
         <li>
           <strong>
-            <a href="{{ .Permalink }}">
-              {{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}
+            <a href="{{ $p.Permalink }}">
+              {{ if $p.Title }}{{ upper $p.Title }}{{ else }}UNTITLED{{ end }}
             </a>
           </strong>
           <span class="warning" role="alert">Warning: No redirect URL</span>
@@ -50,8 +47,8 @@
     {{ else }}
       <li>
         <strong>
-          <a href="{{ .Permalink }}">
-            {{ if .Title }}{{ upper .Title }}{{ else }}UNTITLED{{ end }}
+          <a href="{{ $p.Permalink }}">
+            {{ if $p.Title }}{{ upper $p.Title }}{{ else }}UNTITLED{{ end }}
           </a>
         </strong>
       </li>
