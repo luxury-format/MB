@@ -13,18 +13,30 @@
     {{ $cleanRelPermalink := .RelPermalink | strings.TrimSuffix ".html" | strings.TrimSuffix "/" }}
     
     {{ if .Params.redirect }}
+      {{ $redirectUrl := .Params.redirect }}
+      {{ $linkTitle := "" }}
+      
+      {{ if hasPrefix $redirectUrl "/" }}
+        {{ $linkTitle = $redirectUrl }}
+      
+      {{ else if or (eq $redirectUrl $.Site.BaseURL) (hasPrefix $redirectUrl $.Site.BaseURL) }}
+        {{ $linkTitle = $.Site.BaseURL | 
+            replaceRE "^https?://" "" | 
+            replaceRE "^www\\." "" | 
+            strings.TrimSuffix "/" }}
+      
+      {{ else }}
+        {{ $linkTitle = $redirectUrl | 
+            replaceRE "^https?://" "" | 
+            replaceRE "^www\\." "" | 
+            strings.TrimSuffix "/" }}
+      {{ end }}
+
       <li>
         <a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - 
         <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - 
         redirect to → 
-        <a href="{{ .Params.redirect }}">
-          {{ $cleanRedirect := .Params.redirect | 
-              replaceRE "{{ $.Site.BaseURL }}" "" | 
-              replaceRE "^(https?://)?www\\." "" | 
-              strings.TrimSuffix ".html" | 
-              strings.TrimSuffix "/" }}
-          {{ $cleanRedirect }}
-        </a>
+        <a href="{{ .Params.redirect }}" title="{{ $linkTitle }}">{{ $linkTitle }}</a>
       </li>
     {{ else }}
       <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a></li>
