@@ -1,0 +1,11 @@
+{{ $posts := .Site.Pages.ByPublishDate.Reverse | filterPages }}
+{{ $randomPost := index $posts (mod (now.Unix) (len $posts)) }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="refresh" content="0;url={{ $randomPost.Permalink }}">
+</head>
+<body>
+    Redirecting to <a href="{{ $randomPost.Permalink }}">{{ $randomPost.Title }}</a>
+</body>
+</html>
