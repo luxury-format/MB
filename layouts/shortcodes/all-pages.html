@@ -1,18 +1,32 @@
-<!-- layouts/shortcodes/all-pages.html -->
 <ul>
-{{ range .Site.Pages }}
-  <li>
-    Title - <strong>{{ .Title }}</strong> <br>
-    RelPermalink - <strong>{{ .RelPermalink }}</strong> <br>
-    Permalink - <strong>{{ .Permalink }}</strong> <br>
-    Type - <strong>{{ .Type }}</strong> <br>
-    Section - <strong>{{ .Section }}</strong> <br>
-    Kind - <strong>{{ .Kind }}</strong> <br>
-    Draft - <strong>{{ .Draft }}</strong> <br>
-    Date - <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT <br>
-    PublishDate - <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT <br>
-    LastMod - <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT <br>
-    Weight - <strong>{{ .Weight }}</strong>
-  </li>
-{{ end }}
+  {{ range .Site.Pages }}
+    <li>
+      - Title – <strong>{{ .Title }}</strong><br>
+      - RelPermalink – <strong>{{ .RelPermalink }}</strong><br>
+      - Permalink – <strong>{{ .Permalink }}</strong><br>
+      - Type – <strong>{{ .Type }}</strong><br>
+      - Section – <strong>{{ .Section }}</strong><br>
+      - Kind – <strong>{{ .Kind }}</strong><br>
+      - Draft – <strong>{{ .Draft }}</strong><br>
+      - Date – <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      - PublishDate – <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      - LastMod – <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      - Weight – <strong>{{ .Weight }}</strong><br>
+
+      - Is CJK Language – <strong>{{ .Params.iscjklanguage }}</strong><br>
+      - Menu – <strong>{{ .Params.menu }}</strong><br>
+      - Navigation – <strong>{{ .Params.navigation }}</strong><br>
+      - URL – <strong>{{ .Params.url }}</strong><br>
+      - Layout – <strong>{{ .Params.layout }}</strong><br>
+      - Redirect – <strong>{{ .Params.redirect }}</strong><br>
+      - Categories – <strong>{{ if .Params.categories }}{{ delimit .Params.categories ", " }}{{ end }}</strong><br>
+      - Custom Summary – <strong>{{ .Params.custom_summary }}</strong><br>
+      - GUID – <strong>{{ .Params.guid }}</strong><br>
+      - Microblog – <strong>{{ .Params.microblog }}</strong><br>
+      - OpenGraph – <strong>{{ .Params.opengraph }}</strong><br>
+      - Post ID – <strong>{{ .Params.post_id }}</strong><br>
+      - Summary – <strong>{{ .Params.summary }}</strong><br>
+      - Thumbnail – <strong>{{ .Params.thumbnail }}</strong>
+    </li>
+  {{ end }}
 </ul>
