@@ -24,7 +24,7 @@
       {{ $cleanRedirectTwo = replaceRE "^www\\." "" $cleanRedirectTwo }}
       {{ $cleanRedirectTwo = strings.TrimSuffix ".html" $cleanRedirectTwo }}
       {{ $cleanRedirectTwo = strings.TrimSuffix "/" $cleanRedirectTwo }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ if $cleanRedirectTwo }}{{ $cleanRedirectTwo }}{{ else }}{{ $sleanRedirectOne }}{{ end }}</a>
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ if $cleanRedirectOne }}{{ $cleanRedirectOne }}{{ else }}{{ $cleanRedirectTwo }}{{ end }}</a>
       </li>
     {{ else }}
       <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a></li>
