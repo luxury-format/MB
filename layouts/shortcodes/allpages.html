@@ -1,4 +1,3 @@
-{{/* layouts/shortcodes/allpages.html */}}
 {{ $site  := .Site }}
 {{ $pages := $site.RegularPages }}
 {{ $pages = where $pages "Title" "ne" "" }}
@@ -16,12 +15,9 @@
     {{ if eq $p.Type "redirect" }}
       {{ with $p.Params.redirect }}
         {{- $raw   := . -}}
-        {{- /* strip leading slash */ -}}
         {{- $clean := replaceRE "^/" "" $raw -}}
-        {{- /* strip file extensions */ -}}
         {{- $clean = replace $clean ".html" "" -}}
         {{- $clean = replace $clean ".md"   "" -}}
-        {{- /* ensure leading slash */ -}}
         {{- $clean = printf "/%s" $clean -}}
         {{- $target := $site.GetPage $clean -}}
 
@@ -36,7 +32,6 @@
             </strong>
           {{ else }}
             <a href="{{ $raw }}">{{ $raw }}</a>
-            <span class="external">(external)</span>
           {{ end }}
         </li>
       {{ else }}
@@ -44,7 +39,6 @@
           <strong>
             <a href="{{ $p.Permalink }}">{{ upper $p.Title }}</a>
           </strong>
-          <span class="missing">(no target)</span>
         </li>
       {{ end }}
     {{ else }}
