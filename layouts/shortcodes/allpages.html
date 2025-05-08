@@ -12,13 +12,13 @@
   {{ range $pages }}
     {{ $cleanRelPermalink := .RelPermalink | strings.TrimSuffix ".html" | strings.TrimSuffix "/" }}
     
-    {{ with .Params.redirect }}
+    {{ if .Params.redirect }}
       <li>
         <a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - 
         <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - 
         redirect to → 
-        <a href="{{ . }}">
-          {{ $cleanRedirect := . | 
+        <a href="{{ .Params.redirect }}">
+          {{ $cleanRedirect := .Params.redirect | 
               replaceRE "{{ $.Site.BaseURL }}" "" | 
               replaceRE "^(https?://)?www\\." "" | 
               strings.TrimSuffix ".html" | 
