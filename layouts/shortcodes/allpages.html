@@ -16,21 +16,15 @@
       {{ $redirectUrl := .Params.redirect }}
       {{ $linkTitle := "" }}
       
-      {{ if hasPrefix $redirectUrl "/" }}
-        {{ $slashPageRelPermalink := $redirectUrl | strings.TrimPrefix "/" | strings.TrimSuffix ".html" | strings.TrimSuffix "/" }}
-        {{ $linkTitle = printf "/%s" $slashPageRelPermalink }}
+      {{/* Remove BaseURL from redirect */}}
+      {{ $remaining := $redirectUrl | replaceRE (printf "^%s" $.Site.BaseURL) "" }}
       
-      {{ else if or (eq $redirectUrl $.Site.BaseURL) (hasPrefix $redirectUrl $.Site.BaseURL) }}
-        {{ $linkTitle = $.Site.BaseURL | 
-            replaceRE "^https?://" "" | 
-            replaceRE "^www\\." "" | 
-            strings.TrimSuffix "/" }}
-      
+      {{ if $remaining }}
+        {{/* If something remains after removing BaseURL, use that */}}
+        {{ $linkTitle = $remaining | strings.TrimPrefix "/" | strings.TrimSuffix "/" }}
       {{ else }}
-        {{ $linkTitle = $redirectUrl | 
-            replaceRE "^https?://" "" | 
-            replaceRE "^www\\." "" | 
-            strings.TrimSuffix "/" }}
+        {{/* If nothing remains, extract hostname */}}
+        {{ $linkTitle = (urls.Parse $redirectUrl).Hostname | strings.TrimSuffix "/" }}
       {{ end }}
 
       <li>
