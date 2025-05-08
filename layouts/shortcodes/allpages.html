@@ -12,11 +12,11 @@
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
       <li>
-        <a href="{{ .Permalink }}">{{ upper .Title }}</a>: redirect to → 
+        <a href="{{ .Permalink }}">{{ .Title }}</a>: redirect to → 
         <a href="{{ .Params.redirect }}">{{ .Params.redirect }}</a>
       </li>
     {{ else }}
-      <li><a href="{{ .Permalink }}">{{ upper .Title }}</a></li>
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
     {{ end }}
   {{ end }}
 </ul>
