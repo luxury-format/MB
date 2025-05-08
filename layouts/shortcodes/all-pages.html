@@ -1,18 +1,18 @@
 {{ range .Site.Pages }}
 <h3>{{ .Title }}</h3>
 <ul>
-  <li><strong>RelPermalink:</strong> {{ .RelPermalink }}</li>
-  <li><strong>Permalink:</strong> {{ .Permalink }}</li>
-  <li><strong>Type:</strong> {{ .Type }}</li>
-  <li><strong>Section:</strong> {{ .Section }}</li>
-  <li><strong>Kind:</strong> {{ .Kind }}</li>
-  <li><strong>Draft:</strong> {{ .Draft }}</li>
-  <li><strong>Date:</strong> {{ .Date }}</li>
-  <li><strong>PublishDate:</strong> {{ .PublishDate }}</li>
-  <li><strong>LastMod:</strong> {{ .Lastmod }}</li>
-  <li><strong>Weight:</strong> {{ .Weight }}</li>
+  <li><b>RelPermalink:</b> {{ .RelPermalink }}</li>
+  <li><b>Permalink:</b> {{ .Permalink }}</li>
+  <li><b>Type:</b> {{ .Type }}</li>
+  <li><b>Section:</b> {{ .Section }}</li>
+  <li><b>Kind:</b> {{ .Kind }}</li>
+  <li><b>Draft:</b> {{ .Draft }}</li>
+  <li><b>Date:</b> {{ .Date }}</li>
+  <li><b>PublishDate:</b> {{ .PublishDate }}</li>
+  <li><b>LastMod:</b> {{ .Lastmod }}</li>
+  <li><b>Weight:</b> {{ .Weight }}</li>
   {{ if .Params }}
-  <strong>Params:</strong>
+  <b>Params:</b>
   <ul>
     {{ range $key, $value := .Params }}
     <li>{{ $key }}: {{ $value }}</li>
