@@ -1,31 +1,67 @@
 <ul>
   {{ range .Site.Pages }}
     <li>
-      - Title – <strong>{{ .Title }}</strong><br>
-      - RelPermalink – <strong>{{ .RelPermalink }}</strong><br>
-      - Permalink – <strong>{{ .Permalink }}</strong><br>
-      - Type – <strong>{{ .Type }}</strong><br>
-      - Section – <strong>{{ .Section }}</strong><br>
-      - Kind – <strong>{{ .Kind }}</strong><br>
-      - Draft – <strong>{{ .Draft }}</strong><br>
-      - Date – <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      - PublishDate – <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      - LastMod – <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      - Weight – <strong>{{ .Weight }}</strong><br>
-      - Is CJK Language – <strong>{{ .Params.iscjklanguage }}</strong><br>
-      - Menu – <strong>{{ .Params.menu }}</strong><br>
-      - Navigation – <strong>{{ .Params.navigation }}</strong><br>
-      - URL – <strong>{{ .Params.url }}</strong><br>
-      - Layout – <strong>{{ .Params.layout }}</strong><br>
-      - Redirect – <strong>{{ .Params.redirect }}</strong><br>
-      - Categories – <strong>{{ if .Params.categories }}{{ delimit .Params.categories ", " }}{{ end }}</strong><br>
-      - Custom Summary – <strong>{{ .Params.custom_summary }}</strong><br>
-      - GUID – <strong>{{ .Params.guid }}</strong><br>
-      - Microblog – <strong>{{ .Params.microblog }}</strong><br>
-      - OpenGraph – <strong>{{ .Params.opengraph }}</strong><br>
-      - Post ID – <strong>{{ .Params.post_id }}</strong><br>
-      - Summary – <strong>{{ .Params.summary }}</strong><br>
-      - Thumbnail – <strong>{{ .Params.thumbnail }}</strong>
+      Title – <strong>{{ .Title }}</strong><br>
+      RelPermalink – <strong>{{ .RelPermalink }}</strong><br>
+      Permalink – <strong>{{ .Permalink }}</strong><br>
+      Type – <strong>{{ .Type }}</strong><br>
+      Kind – <strong>{{ .Kind }}</strong><br>
+      Draft – <strong>{{ .Draft }}</strong><br>
+      Date – <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      PublishDate – <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      LastMod – <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      Weight – <strong>{{ .Weight }}</strong><br>
+      Navigation – <strong>{{ .Params.navigation }}</strong><br>
+      URL – <strong>{{ .URL }}</strong><br>
+      Is CJK Language – <strong>{{ .IsCJKLanguage }}</strong><br>
+
+      {{ if .Section }}
+      Section – <strong>{{ .Section }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.menu }}
+      Menu – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Layout }}
+      Layout – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.redirect }}
+      Redirect – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.categories }}
+      Categories – <strong>{{ delimit . ", " }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.custom_summary }}
+      Custom Summary – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.guid }}
+      GUID – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.microblog }}
+      Microblog – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.opengraph }}
+      OpenGraph – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.post_id }}
+      Post ID – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.summary }}
+      Summary – <strong>{{ . }}</strong><br>
+      {{ end }}
+
+      {{ with .Params.thumbnail }}
+      Thumbnail – <strong>{{ . }}</strong>
+      {{ end }}
     </li>
   {{ end }}
 </ul>
