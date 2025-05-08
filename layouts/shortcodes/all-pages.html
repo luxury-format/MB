@@ -1,18 +1,8 @@
 {{ range .Site.Pages }}
-<h3>{{ .Title }}</h3>
 <ul>
-  <li><b>RelPermalink:</b> {{ .RelPermalink }}</li>
-  <li><b>Permalink:</b> {{ .Permalink }}</li>
-  <li><b>Type:</b> {{ .Type }}</li>
-  <li><b>Section:</b> {{ .Section }}</li>
-  <li><b>Kind:</b> {{ .Kind }}</li>
-  <li><b>Draft:</b> {{ .Draft }}</li>
-  <li><b>Date:</b> {{ .Date }}</li>
-  <li><b>PublishDate:</b> {{ .PublishDate }}</li>
-  <li><b>LastMod:</b> {{ .Lastmod }}</li>
-  <li><b>Weight:</b> {{ .Weight }}</li>
+  <li>{{ .Title }} - RelPermalink: {{ .RelPermalink }} - Permalink: {{ .Permalink }} - Type: {{ .Type }} - Section: {{ .Section }} - Kind: {{ .Kind }} - Draft: {{ .Draft }} - Date: {{ .Date }} - PublishDate: {{ .PublishDate }} - LastMod: {{ .Lastmod }} - Weight: {{ .Weight }} </li>
   {{ if .Params }}
-  <b>Params:</b>
+  Params:
   <ul>
     {{ range $key, $value := .Params }}
     <li>{{ $key }}: {{ $value }}</li>
