@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+        var posts = [
+            {{ range .Site.Pages.ByPublishDate.Reverse }}
+                "{{ .Permalink }}",
+            {{ end }}
+        ];
+        window.location.href = posts[Math.floor(Math.random() * posts.length)];
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=/">
+    </noscript>
+</head>
+<body>
+    Redirecting to a random post...
+</body>
+</html>
