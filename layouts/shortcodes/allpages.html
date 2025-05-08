@@ -1,39 +1,53 @@
-{{ $pages := .Site.Pages }}
-{{ $pages = where $pages "Title" "ne" "" }}
-{{ $pages = where $pages "Kind" "page" }}
-{{ $pages = where $pages "Type" "in" (slice "page" "archive" "redirect" "photos") }}
-{{ $pages = where $pages "Type" "not in" (slice "2025" "categories" "post") }}
-{{ $pages = where $pages "Kind" "not in" (slice "section" "taxonomy" "home" "term") }}
-{{ $pages = where $pages "Layout" "ne" "post" }}
-{{ $pages = where $pages "Section" "not in" (slice "2025" "categories") }}
-{{ $pages = sort $pages "Permalink" }}
+{{ $site := .Site }}
+{{ $pages := .Site.Pages
+   | where "Title" "ne" ""
+   | where "Kind"  "page"
+   | where "Type" "in"    (slice "page" "archive" "redirect" "photos")
+   | where "Type" "not in" (slice "2025" "categories" "post")
+   | where "Kind" "not in" (slice "section" "taxonomy" "home" "term")
+   | where "Layout" "ne" "post"
+   | where "Section" "not in" (slice "2025" "categories")
+   | sort "Permalink"
+}}
+
+{{- define "allpages-link" -}}
+  {{- $p := . -}}
+  <strong>
+    <a href="{{ $p.Permalink }}">
+      {{ if $p.Title }}{{ upper $p.Title }}{{ else }}UNTITLED{{ end }}
+    </a>
+  </strong>
+{{- end -}}
 
 <ul class="allpages">
   {{ range $pages }}
     {{ if eq .Type "redirect" }}
       {{ with .Params.redirect }}
         {{ $raw := . }}
-        {{ $clean := strings.TrimPrefix "/" $raw }}
-        {{ $clean = printf "/%s" $clean }}
-        {{ $clean = replaceRE "\\.(html|md)$" "" $clean }}
-        {{ $target := .site.GetPage $clean }}
+        {{ $clean := printf "/%s" (trimPrefix "/" $raw) | replaceRE "\\.(html|md)$" "" }}
+        {{ $target := $site.GetPage $clean }}
+
         <li>
-          <strong><a href="{{ $.Permalink }}">{{ if $.Title }}{{ upper $.Title }}{{ else }}Untitled{{ end }}</a></strong> – redirect to:
+          {{ template "allpages-link" $. }}
+           – redirect to:
           {{ if $target }}
-            <strong>{{ if $target.Title }}{{ upper $target.Title }}{{ else }}Untitled{{ end }}</strong> – <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
+            {{ template "allpages-link" $target }}
+            <small>({{ $target.RelPermalink }})</small>
           {{ else }}
             <a href="{{ $raw }}">{{ $raw }}</a>
-            <span class="warning">(Warning: Target page not found)</span>
+            <span class="warning" role="alert">Warning: Target not found</span>
           {{ end }}
         </li>
+
       {{ else }}
         <li>
-          <strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}Untitled{{ end }}</a></strong>
-          <span class="warning">(Warning: Redirect page missing target URL)</span>
+          {{ template "allpages-link" . }}
+          <span class="warning" role="alert">Warning: No redirect URL</span>
         </li>
       {{ end }}
+
     {{ else }}
-      <li><strong><a href="{{ .Permalink }}">{{ if .Title }}{{ upper .Title }}{{ else }}Untitled{{ end }}</a></strong></li>
+      <li>{{ template "allpages-link" . }}</li>
     {{ end }}
   {{ end }}
 </ul>
