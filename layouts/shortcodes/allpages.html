@@ -10,38 +10,28 @@
 {{ $pages = sort $pages "Permalink" }}
 
 <ul class="allpages">
-  {{ range $pages }}
-    {{ $p := . }}
-    {{ if eq $p.Type "redirect" }}
-      {{ with $p.Params.redirect }}
-        {{- $raw   := . -}}
-        {{- $clean := replaceRE "^/" "" $raw -}}
-        {{- $clean = replace $clean ".html" "" -}}
-        {{- $clean = replace $clean ".md"   "" -}}
-        {{- $clean = printf "/%s" $clean -}}
-        {{- $target := $site.GetPage $clean -}}
+  {{ range .Site.RegularPages }}
+    {{ $ := . }}
+    {{ if eq $.Type "redirect" }}
+      {{ with $.Params.redirect }}
+        {{ $raw := . }}
+        {{ $parsed := urls.Parse $raw }}
 
         <li>
           <strong>
-            <a href="{{ $p.Permalink }}">{{ upper $p.Title }}</a>
+            <a href="{{ $.Permalink }}">{{ upper $.Title }}</a>
           </strong>
            → 
-          {{ if $target }}
-            <a href="{{ $raw }}">{{ $raw }}</a>
-          {{ end }}
+          <a href="{{ $raw }}">{{ $parsed.Hostname }}</a>
         </li>
       {{ else }}
         <li>
-          <strong>
-            <a href="{{ $p.Permalink }}">{{ upper $p.Title }}</a>
-          </strong>
+          <strong><a href="{{ $.Permalink }}">{{ upper $.Title }}</a></strong>
         </li>
       {{ end }}
     {{ else }}
       <li>
-        <strong>
-          <a href="{{ $p.Permalink }}">{{ upper $p.Title }}</a>
-        </strong>
+        <strong><a href="{{ $.Permalink }}">{{ upper $.Title }}</a></strong>
       </li>
     {{ end }}
   {{ end }}
