@@ -16,14 +16,11 @@
       {{ $redirectUrl := .Params.redirect }}
       {{ $linkTitle := "" }}
       
-      {{/* Remove BaseURL from redirect */}}
       {{ $remaining := $redirectUrl | replaceRE (printf "^%s" $.Site.BaseURL) "" }}
       
       {{ if $remaining }}
-        {{/* If something remains after removing BaseURL, use that */}}
         {{ $linkTitle = $remaining | strings.TrimPrefix "/" | strings.TrimSuffix "/" }}
       {{ else }}
-        {{/* If nothing remains, extract hostname */}}
         {{ $linkTitle = (urls.Parse $redirectUrl).Hostname | strings.TrimSuffix "/" }}
       {{ end }}
 
