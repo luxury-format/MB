@@ -1,3 +1,5 @@
 {{ range .Site.Data.blogrolls.recommendations }}
-<p>{{ .name }}: {{ .url }}, RSS Feed: {{ .feed_url }}, About: {{ .about }}, Created at: {{ .created_at }}, Updated at: {{ .updated_at }}</p>
+<ul>
+    <li><strong>{{ .name }}:</strong> <a href="{{ .url }}">{{ .url }}</a><br>RSS Feed: <a href="{{ .feed_url }}">{{ .feed_url }}</a></li>
+</ul>
 {{ end }}
