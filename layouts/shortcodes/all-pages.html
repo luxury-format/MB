@@ -43,15 +43,11 @@
       {{ end }}
 
       {{ with .Params.guid }}
-      GUID – <strong>{{ . }}</strong><br>
-      {{ end }}
-
-      {{ with .Params.microblog }}
-      Microblog – <strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      GUID – <strong><a href="{{ . }}">{{ . }}</a></strong><br>
       {{ end }}
 
       {{ with .Params.opengraph }}
-      OpenGraph – <strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      OpenGraph – <strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.post_id }}
