@@ -14,15 +14,15 @@
       {{ $targetPath := .Params.redirect }}
       {{ $target := site.GetPage $targetPath }}
       <li>
-        <strong>{{ .Title }}</strong> – redirect to:
+        <strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong> – redirect to:
         {{ if $target }}
-          <a href="{{ $target.Permalink }}">{{ $target.Title }}</a>
+          <a href="{{ $target.Permalink }}">{{ $target.RelPermalink }}</a>
         {{ else }}
           <a href="{{ $targetPath }}">{{ $targetPath }}</a>
         {{ end }}
       </li>
     {{ else }}
-      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+      <li><strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong></li>
     {{ end }}
   {{ end }}
 </ul>
