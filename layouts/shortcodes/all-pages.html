@@ -1,37 +1,37 @@
 <ul>
   {{ range .Site.Pages }}
     <li>
-      Title – <strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong><br>
-      Rel Permalink – <strong><a href="{{ .RelPermalink }}">{{ .RelPermalink }}</a></strong><br>
-      Permalink – <strong><a href="{{ .Permalink }}">{{ .Permalink }}</a></strong><br>
-      URL – <strong><a href="{{ .URL }}">{{ .URL }}</a></strong><br>
-      Type – <strong>{{ .Type }}</strong><br>
-      Kind – <strong>{{ .Kind }}</strong><br>
-      Draft – <strong>{{ .Draft }}</strong><br>
-      Date – <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      Publish Date – <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      Last Modified – <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
-      Weight – <strong>{{ .Weight }}</strong><br>
-      Navigation – <strong>{{ .Params.navigation }}</strong><br>
+      Title:<br><strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong><br>
+      Rel Permalink:<br><strong><a href="{{ .RelPermalink }}">{{ .RelPermalink }}</a></strong><br>
+      Permalink:<br><strong><a href="{{ .Permalink }}">{{ .Permalink }}</a></strong><br>
+      URL:<br><strong><a href="{{ .URL }}">{{ .URL }}</a></strong><br>
+      Type:<br><strong>{{ .Type }}</strong><br>
+      Kind:<br><strong>{{ .Kind }}</strong><br>
+      Draft:<br><strong>{{ .Draft }}</strong><br>
+      Date:<br><strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      Publish Date:<br><strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      Last Modified:<br><strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong> CT<br>
+      Weight:<br><strong>{{ .Weight }}</strong><br>
+      Navigation:<br><strong>{{ .Params.navigation }}</strong><br>
 
       {{ if .Section }}
-      Section – <strong>{{ .Section }}</strong><br>
+      Section:<br><strong>{{ .Section }}</strong><br>
       {{ end }}
 
       {{ with .Params.menu }}
-      Menu – <strong>{{ . }}</strong><br>
+      Menu:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Layout }}
-      Layout – <strong>{{ . }}</strong><br>
+      Layout:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.redirect }}
-      Redirect – <strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      Redirect:<br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
       {{ end }}
 
       {{ with .Params.categories }}
-      Categories – <strong>
+      Categories:<br><strong>
           {{ range $i, $cat := . }}
             <a href="{{ "/categories/" | relURL }}{{ $cat | urlize }}">{{ $cat }}</a>{{ if lt (add $i 1) (len .) }}, {{ end }}
           {{ end }}
@@ -39,27 +39,27 @@
       {{ end }}
 
       {{ with .Params.custom_summary }}
-      Custom Summary – <strong>{{ . }}</strong><br>
+      Custom Summary:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.guid }}
-      GUID – <strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      GUID:<br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
       {{ end }}
 
       {{ with .Params.opengraph }}
-      OpenGraph – <strong>{{ . }}</strong><br>
+      OpenGraph:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.post_id }}
-      Post ID – <strong>{{ . }}</strong><br>
+      Post ID:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.summary }}
-      Summary – <strong>{{ . }}</strong><br>
+      Summary:<br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.thumbnail }}
-      Thumbnail – <strong><a href="{{ . }}">{{ . }}</a></strong>
+      Thumbnail:<br><strong><a href="{{ . }}">{{ . }}</a></strong>
       {{ end }}
     </li>
   {{ end }}
