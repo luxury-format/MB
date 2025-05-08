@@ -1,14 +1,6 @@
 {{ range .Site.Pages }}
 <ul>
-  <li>Title - <strong>{{ .Title }}</strong> <br>RelPermalink - {{ .RelPermalink }} <br>Permalink - {{ .Permalink }} <br>Type - {{ .Type }} <br>Section - {{ .Section }} <br>Kind - {{ .Kind }} <br>Draft - {{ .Draft }} <br>Date - {{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>PublishDate - {{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>LastMod - {{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>Weight - {{ .Weight }} </li>
-  {{ if .Params }}
-  <strong>Params:</strong>
-  <ul>
-    {{ range $key, $value := .Params }}
-    <li><em>{{ $key }}</em> - {{ $value }}</li>
-    {{ end }}
-  </ul>
-  </li>
+  <li>Title - <strong>{{ .Title }}</strong> <br>RelPermalink - <strong>{{ .RelPermalink }}</strong> <br>Permalink - <strong>{{ .Permalink }}</strong> <br>Type - <strong>{{ .Type }}</strong> <br>Section - <strong>{{ .Section }}</strong> <br>Kind - <strong>{{ .Kind }}</strong> <br>Draft - <strong>{{ .Draft }}</strong> <br>Date - <strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>PublishDate - <strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>LastMod - <strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }} CT <br>Weight - <strong>{{ .Weight }}</strong> </li>
   {{ end }}
 </ul>
 {{ end }}
