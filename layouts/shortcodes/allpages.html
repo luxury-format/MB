@@ -19,7 +19,7 @@
       {{ $remaining := $redirectUrl | replaceRE (printf "^%s" $.Site.BaseURL) "" }}
       
       {{ if $remaining }}
-        {{ $linkTitle = $remaining | strings.TrimPrefix "/" | strings.TrimSuffix "/" }}
+        {{ $linkTitle = $remaining | strings.TrimSuffix "/" }}
       {{ else }}
         {{ $linkTitle = (urls.Parse $redirectUrl).Hostname | strings.TrimSuffix "/" }}
       {{ end }}
