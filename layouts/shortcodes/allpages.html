@@ -19,8 +19,11 @@
       {{ $cleanRedirect = replaceRE "^www\\." "" $cleanRedirect }}
       {{ $cleanRedirect = strings.TrimSuffix ".html" $cleanRedirect }}
       {{ $cleanRedirect = strings.TrimSuffix "/" $cleanRedirect }}
-      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ $cleanRedirect }}</a>
-      </li>
+      {{ $redirectTitle := $cleanRedirect }}
+      {{ range where $.Site.Pages "RelPermalink" $cleanRedirect }}
+        {{ $redirectTitle = upper .Title }}
+      {{ end }}
+      <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a> - redirect to → <a href="{{ .Params.redirect }}">{{ $redirectTitle }}</a></li>
     {{ else }}
       <li><a href="{{ .Permalink }}"><strong>{{ upper .Title }}</strong></a> - <a href="{{ .Permalink }}">{{ $cleanRelPermalink }}</a></li>
     {{ end }}
