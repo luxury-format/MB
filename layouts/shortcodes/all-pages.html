@@ -9,9 +9,6 @@
       URL: <strong><a href="{{ .URL }}">{{ .URL }}</a></strong><br>
         Permalink: <strong><a href="{{ .Permalink }}">{{ .Permalink }}</a></strong><br>
       Draft: <strong>{{ .Draft }}</strong><br>
-      Date:<br><strong>{{ .Date.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong><br>
-      PublishDate:<br><strong>{{ .PublishDate.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong><br>
-      LastMod:<br><strong>{{ .Lastmod.Format "Monday, January 2, 2006 at 3:04:05 PM" }}</strong><br>
       Navigation: <strong>{{ .Params.navigation }}</strong><br>
 
       {{ if .Section }}
@@ -27,7 +24,7 @@
       {{ end }}
 
       {{ with .Params.redirect }}
-      Redirect:<br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      Redirect to: <br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
       {{ end }}
 
       {{ with .Params.categories }}
@@ -39,15 +36,15 @@
       {{ end }}
 
       {{ with .Params.custom_summary }}
-      Custom Summary:<br><strong>{{ . }}</strong><br>
+      Custom Summary: <br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.guid }}
-      GUID:<br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
+      GUID: <br><strong><a href="{{ . }}">{{ . }}</a></strong><br>
       {{ end }}
 
       {{ with .Params.opengraph }}
-      OpenGraph:<br><strong>{{ . }}</strong><br>
+      OpenGraph: <br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.post_id }}
@@ -55,11 +52,11 @@
       {{ end }}
 
       {{ with .Params.summary }}
-      Summary:<br><strong>{{ . }}</strong><br>
+      Summary: <br><strong>{{ . }}</strong><br>
       {{ end }}
 
       {{ with .Params.thumbnail }}
-      Thumbnail:<br><strong><a href="{{ . }}">{{ . }}</a></strong>
+      Thumbnail: <br><strong><a href="{{ . }}">{{ . }}</a></strong>
       {{ end }}
       <hr>
     </li>
