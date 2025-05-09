@@ -1,7 +1,7 @@
+<hr>
 <ul>
   {{ range .Site.Pages }}
     <li>
-      <hr>
       Title: <strong><a href="{{ .Permalink }}">{{ .Title }}</a></strong><br>
       Type: <strong>{{ .Type }}</strong><br>
       Kind: <strong>{{ .Kind }}</strong><br>
@@ -61,6 +61,7 @@
       {{ with .Params.thumbnail }}
       Thumbnail:<br><strong><a href="{{ . }}">{{ . }}</a></strong>
       {{ end }}
+      <hr>
     </li>
   {{ end }}
 </ul>
